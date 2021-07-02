@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./App.scss";
+import "./App.scss";
 import UserDetail from './Components/UserDetail';
 import UsersList from './Components/UsersList';
 
@@ -7,6 +7,7 @@ const userList = [];
 
 function App() {
   const getUser = () => (
+    // https://api.github.com/users?per_page=10
     fetch("https://reqres.in/api/users?per_page=10")
     .then((response) => response.json())
     .then((json) => json.data)
@@ -29,11 +30,20 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <div className={styles.App}>
-        <UsersList users={users} handleClick={handleUserDetail} />
+    <div className="container-sm">
+      <div className="row">
+        <header className="col header">
+          <h1>Users</h1>
+        </header>
       </div>
-      {userDetail.id && <UserDetail user={userDetail} />}
+      <div className="row">
+        <div className="col">
+          <UsersList users={users} handleClick={handleUserDetail} />
+        </div>
+        <div className="col">
+          {userDetail.id && <UserDetail user={userDetail} />}
+        </div>
+      </div>
     </div>
   );
 }
