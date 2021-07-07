@@ -1,11 +1,11 @@
 import React from "react";
 
-function UserList ({users, handleClick}) {
+function UserList ({users, onClick}) {
 
   const handleId = (event) => {
     const { target } = event;
     const id = parseInt(target.getAttribute('data-id'));
-    handleClick(id);
+    onClick(id);
   }
 
   return (
@@ -16,7 +16,7 @@ function UserList ({users, handleClick}) {
             <li key={user.id}>
               <p>
                 <a onClick={handleId} data-id={user.id} href={`#${user.id}`}>
-                  {user.first_name} {user.last_name}
+                  {user.login}
                 </a>
               </p>
             </li>

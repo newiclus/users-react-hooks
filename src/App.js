@@ -1,33 +1,27 @@
-import React, { useState, useEffect } from "react";
 import "./App.scss";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import UserDetail from './Components/UserDetail';
 import UsersList from './Components/UsersList';
-
-const userList = [];
+import { fetchUserById, fetchUsers } from './Redux/reducers';
 
 function App() {
-  const getUser = () => (
-    // https://api.github.com/users?per_page=10
-    fetch("https://reqres.in/api/users?per_page=10")
-    .then((response) => response.json())
-    .then((json) => json.data)
-    .catch((error) => console.log(error.message))
-  );
+  const users = useSelector((state) => state.user.list);
+  const userDetail = useSelector((state) => state.user.current);
+  const dispatch = useDispatch();
 
-  const [users, setUsers] = useState(userList);
-  const [userDetail, setUserDetail] = useState({});
+  //const [users, setUsers] = useState(userList);
+  //const [userDetail, setUserDetail] = useState({});
 
   const handleUserDetail = (id) => {
-    const userData= users.filter(user => user.id === id)[0];
-    console.log(userData);
-    setUserDetail(userData);
+    //setUserDetail(userData);
+    dispatch(fetchUserById(id));
   }
 
   useEffect(() => {
-    getUser().then(data => {
-      setUsers(data);
-    });
-  }, []);
+      dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <div className="container-sm">
@@ -38,7 +32,7 @@ function App() {
       </div>
       <div className="row">
         <div className="col">
-          <UsersList users={users} handleClick={handleUserDetail} />
+          <UsersList users={users} onClick={handleUserDetail} />
         </div>
         <div className="col">
           {userDetail.id && <UserDetail user={userDetail} />}

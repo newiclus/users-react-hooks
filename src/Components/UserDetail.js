@@ -2,16 +2,27 @@ import React from "react";
 import PropTypes from 'prop-types';
 
 function UserDetail({ user }) {
-  const iconImg = 'https://github.githubassets.com/images/icons/emoji/unicode/2709.png?v8';
+  const iconOcto = 'https://github.githubassets.com/images/icons/emoji/octocat.png?v8';
+  const iconLink = 'https://github.githubassets.com/images/icons/emoji/unicode/1f517.png?v8';
+  const iconHouse = 'https://github.githubassets.com/images/icons/emoji/unicode/1f3e0.png?v8';
+
   return (
     <div className="user-detail" data-id={user.id}>
       <figure>
-        <img className="rounded-circle avatar" src={user.avatar} alt={`avatar of ${user.first_name}`}/>
+        <img className="rounded-circle avatar" src={user.avatar_url} alt={`avatar of ${user.name}`} height="160"/>
       </figure>
-      <h4>{user.first_name} {user.last_name}</h4>
+      <h4>{user.name}</h4>
       <address>
-        <img src={iconImg} alt="icon" height="22" /> &nbsp;
-        <a href={`mailto:${user.first_name}`}>{user.email}</a>
+        <img src={iconOcto} alt="icon" height="22" /> &nbsp;
+        <a href={user.html_url} target="_blank" rel="noreferrer">{user.login}</a>
+      </address>
+      <address>
+        <img src={iconLink} alt="icon" height="22" /> &nbsp;
+        <a href={user.blog} target="_blank" rel="noreferrer">{user.blog}</a>
+      </address>
+      <address>
+        <img src={iconHouse} alt="icon" height="22" /> &nbsp;
+        <span>{user.location}</span>
       </address>
     </div>
   );
@@ -20,10 +31,10 @@ function UserDetail({ user }) {
 UserDetail.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    avatar: PropTypes.string.isRequired,
-    email: PropTypes.string,
-    first_name: PropTypes.string,
-    last_name: PropTypes.string
+    avatar_url: PropTypes.string.isRequired,
+    login: PropTypes.string,
+    name: PropTypes.string,
+    html_url: PropTypes.string
   })
 }
 
