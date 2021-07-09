@@ -4,11 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 
 import UserDetail from './Components/UserDetail';
 import UsersList from './Components/UsersList';
+import Spinner from './Components/Spinner';
 import { fetchUserById, fetchUsers } from './Redux/reducers';
 
 function App() {
   const users = useSelector((state) => state.user.list);
   const userDetail = useSelector((state) => state.user.current);
+  const loading = useSelector((state) => state.user.loading);
   const dispatch = useDispatch();
 
   //const [users, setUsers] = useState(userList);
@@ -35,6 +37,7 @@ function App() {
           <UsersList users={users} onClick={handleUserDetail} />
         </div>
         <div className="col">
+          {loading && <Spinner />}
           {userDetail.id && <UserDetail user={userDetail} />}
         </div>
       </div>

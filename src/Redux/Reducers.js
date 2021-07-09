@@ -53,8 +53,13 @@ export const userSlice = createSlice({
       state.list = action.payload;
     });
 
+    builder.addCase(fetchUserById.pending, (state) => {
+      state.loading = true;
+    });
+
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
       state.current = action.payload;
+      state.loading = false;
     });
   },
 });
